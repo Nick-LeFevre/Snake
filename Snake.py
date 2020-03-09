@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+import threading
 
 pygame.init()
 
@@ -32,7 +33,6 @@ def your_score(score):
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
-
 def message(msg,color):
     msg = font_style.render(msg,True,color)
     dis.blit(msg, [dis_width/8, dis_height/3])
@@ -56,11 +56,19 @@ def game_loop():
     
     foodgoodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0   #food that helps you grow in length
     foodgoody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
-    foodbadx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0    #food that if collected will lose 1 point in length
-    foodbady = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
-    foodgreatx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0  #food that spawns every 10 seconds and increases length of snake and score by 3
-    foodgreaty = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
-
+    foodbad1 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad1 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodbad2 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad2 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodbad3 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad3 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodbad4 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad4 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodbad5 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad5 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodbad6 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foodbad6 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    
     while not game_over:
         
         while game_close == True:
@@ -99,10 +107,14 @@ def game_loop():
         x1 += x1_change
         y1 += y1_change
         dis.fill(white)
-        pygame.draw.rect(dis, blue,[foodgoodx, foodgoody, snake_block, snake_block])    #good food block
-        pygame.draw.rect(dis, red, [foodbadx, foodbady, snake_block, snake_block])      #bad food block
-        pygame.draw.rect(dis, yellow, [foodgreatx, foodgreaty, snake_block, snake_block])   #great food block
-
+        pygame.draw.rect(dis, blue,[foodgoodx, foodgoody, snake_block, snake_block])        #good food block
+        pygame.draw.rect(dis, red, [foodbad1, foodbad1, snake_block, snake_block])          #bad food block
+        pygame.draw.rect(dis, red, [foodbad2, foodbad2, snake_block, snake_block])
+        pygame.draw.rect(dis, red, [foodbad3, foodbad3, snake_block, snake_block])
+        pygame.draw.rect(dis, red, [foodbad4, foodbad4, snake_block, snake_block])
+        pygame.draw.rect(dis, red, [foodbad5, foodbad5, snake_block, snake_block])
+        pygame.draw.rect(dis, red, [foodbad6, foodbad6, snake_block, snake_block])
+        
         snake_Head = []
         snake_Head.append(x1)
         snake_Head.append(y1)
@@ -124,21 +136,33 @@ def game_loop():
             foodgoodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             foodgoody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
-
+            
         #bad food ends the game
-        if x1 == foodbadx and y1 == foodbady:
-            foodbadx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-            foodbady = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+        if x1 == foodbad1 and y1 == foodbad1:
+            foodbad1 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad1 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             game_close = True
-
-        #great food that changes length in snake by adding 3
-        if x1 == foodgreatx and y1 == foodgreaty:
-            foodgreatx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0  
-            foodgreaty = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
-            Length_of_snake += 3
-
+        if x1 == foodbad2 and y1 == foodbad2:
+            foodbad2 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad2 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            game_close = True
+        if x1 == foodbad3 and y1 == foodbad3:
+            foodbad3 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad3 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            game_close = True
+        if x1 == foodbad4 and y1 == foodbad4:
+            foodbad4 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad4 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            game_close = True
+        if x1 == foodbad5 and y1 == foodbad5:
+            foodbad5 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad5 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            game_close = True
+        if x1 == foodbad6 and y1 == foodbad6:
+            foodbad6 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foodbad6 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            game_close = True
         clock.tick(snake_speed)
-        
 
     pygame.quit()
     quit()
